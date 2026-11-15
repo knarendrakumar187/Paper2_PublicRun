@@ -27,13 +27,16 @@ from neo4j_util import ROOT, TARGET_DB, counts, driver, now, read_session  # noq
 
 OUT = ROOT / "results/audit"
 RUNS = ROOT / "results/Metapath_runs"
+RK = ROOT / "results/Ranking"
+LOGS = ROOT / "logs"
 FORBIDDEN = [r"liver_graph", r"graph-export-2026-11-05", r"rebuild_graph", r"prepare_graph_release", r"Paper1_HighConfidence",
              r"Paper1_Results", r"progression_genes", r"11_final_all_3845_genes", r"11_FINAL_shortlist", r"10_loso_all_eligible_runs",
              r"task2_gene_clusters", r"task4_all_significant", r"New_drug_gene_links", r"Task7_external_layer",
              r"indication_pairs_plan", r"graph_gap_properties", r"Tier [123]", r"[Ss]hortlist", r"23-gene", r"\bC[1-5]\b",
              r"\bF[0-4]\b", r"[Ll]argest_transition", r"6,222", r"3,845", r"14,794", r"Paper ?1", r"paper1", r"companion",
              r"old_reference", r"TRACKS_FIBROSIS", r"TRACKS_INFLAMMATION", r"Paper2_Results"]
-FINAL_FILES = ["{r}_BB_liver_treating_drugs_final.csv", "{r}_BB_all_drugs_ranked.csv", "{r}_BB.csv", "{r}_all_routes.csv"]
+ROUTE_FILES = ["{r}_BB.csv", "{r}_all_routes.csv"]
+RANK_FILES = ["{r}_FINAL_ranked_drugs.csv", "{r}_strict_liver_treating_drugs.csv"]
 RUN_NAMES = ["RunA_all_seed_genes", "RunB_histology_genes", "RunC_fibrosis_genes", "RunD_seed_plus_GWAS"]
 
 
@@ -77,8 +80,8 @@ def check2():
 
 
 def check3():
-    seed = set(pd.read_csv(ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv").ensembl_id)
-    gwas = set(pd.read_csv(ROOT / "Paper2_seed_options/seed_genes_optional_GWAS_Catalog.csv").ensembl_id)
+    seed = set(pd.read_csv(ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv").ensembl_id)
+    gwas = set(pd.read_csv(ROOT / "seed_genes/seed_genes_optional_GWAS_Catalog.csv").ensembl_id)
     out = {}
     for r in RUN_NAMES:
         allowed = seed | gwas if r.startswith("RunD") else seed
@@ -95,14 +98,15 @@ def check4():
     d = pd.read_csv(ROOT / "results/Direction_consistent_drugs/candidate_drugs_direction_summary.csv")
     only = pd.read_csv(ROOT / "results/Direction_consistent_drugs/only_consistent_drugs.csv")
     dir_ok = len(d) == len(main_) == f.drugs.iloc[-1] and (d.direction_group == "only consistent").sum() == len(only)
-    rk = pd.read_csv(RUNS / "ranking_run_table.csv")
-    rank_ok = all(r.drugs_treating_a_liver_disease - r.removed_liver_contraindicated == r.final_ranked_drugs
-                  and r.drugs_with_BB_routes - r.secondary_removed_liver_contraindicated == r.secondary_ranked_drugs
-                  for r in rk.itertuples())
+    rk = pd.read_csv(RK / "ranking_run_table.csv")
+    mp = pd.read_csv(RUNS / "metapath_run_summary.csv").set_index("run")
+    rank_ok = all(r.drugs_with_BB_routes - r.removed_liver_contraindicated == r.final_ranked_drugs
+                  and r.drugs_with_BB_routes == mp.loc[r.run, "drugs_with_BB_routes"]
+                  and r.final_drugs_treating_a_liver_disease == r.strict_liver_treating_drugs for r in rk.itertuples())
     for r in rk.itertuples():
-        fin = pd.read_csv(RUNS / f"{r.run}_BB_liver_treating_drugs_final.csv")
-        alld = pd.read_csv(RUNS / f"{r.run}_BB_all_drugs_ranked.csv")
-        rank_ok &= len(fin) == r.final_ranked_drugs and len(alld) == r.secondary_ranked_drugs
+        fin = pd.read_csv(RK / f"{r.run}_FINAL_ranked_drugs.csv")
+        st = pd.read_csv(RK / f"{r.run}_strict_liver_treating_drugs.csv")
+        rank_ok &= len(fin) == r.final_ranked_drugs and len(st) == r.strict_liver_treating_drugs
     before = (ROOT / "README.md").read_text(encoding="utf-8")
     subprocess.run([sys.executable, str(ROOT / "code/make_readme.py")], cwd=ROOT, check=True, capture_output=True)
     readme_ok = (ROOT / "README.md").read_text(encoding="utf-8") == before
@@ -113,23 +117,23 @@ def check4():
 
 
 def check5():
-    files = {r: {f.format(r=r): None for f in FINAL_FILES} for r in RUN_NAMES}
-    files["comparison"] = {"top25_comparison.csv": None, "top25_comparison_all_drugs.csv": None}
-    before = {}
-    for grp in files.values():
-        for f in grp:
-            before[f] = table_hash(RUNS / f)
-    backup = OUT / "metapath_runs_before_rerun"
+    files = [RUNS / f.format(r=r) for r in RUN_NAMES for f in ROUTE_FILES]
+    files += [RK / f.format(r=r) for r in RUN_NAMES for f in RANK_FILES]
+    files += [RK / "top25_comparison_FINAL.csv", RK / "top25_comparison_strict.csv"]
+    before = {str(f.relative_to(ROOT)): table_hash(f) for f in files}
+    backup = ROOT / "logs/before_rerun"
     if backup.exists():
         shutil.rmtree(backup)
-    shutil.move(str(RUNS), str(backup))
-    RUNS.mkdir(parents=True)
+    backup.mkdir(parents=True)
+    for d in (RUNS, RK):
+        shutil.move(str(d), str(backup / d.name))
+        d.mkdir(parents=True)
     for sc in ["metapaths.py", "ranking.py"]:
         r = subprocess.run([sys.executable, str(ROOT / "code" / sc)], cwd=ROOT, capture_output=True, text=True)
-        (OUT / f"rerun_{sc.replace('.py', '')}.log").write_text(r.stdout + r.stderr, encoding="utf-8")
+        (LOGS / f"rerun_{sc.replace('.py', '')}.log").write_text(r.stdout + r.stderr, encoding="utf-8")
         if r.returncode:
             raise SystemExit(f"rerun of {sc} failed; previous outputs kept in {backup}")
-    after = {f: table_hash(RUNS / f) for f in before}
+    after = {k: table_hash(ROOT / k) for k in before}
     diff = [f for f in before if before[f] != after[f]]
     if not diff:
         shutil.rmtree(backup)

@@ -35,7 +35,7 @@ from statsmodels.stats.multitest import multipletests
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import NAFLD, ROOT, counts, driver, now, read_session, write_log, write_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 CTD = ROOT / "data/ctd/CTD_diseases_pathways.csv.gz"
 OUT = ROOT / "results/graph_build/step0_7_pathway_nafld"
 SOURCE = "seed enrichment + CTD"

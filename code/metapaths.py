@@ -32,8 +32,8 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import NAFLD, ROOT, driver, now, read_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
-GWAS = ROOT / "Paper2_seed_options/seed_genes_optional_GWAS_Catalog.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
+GWAS = ROOT / "seed_genes/seed_genes_optional_GWAS_Catalog.csv"
 DRUGS = ROOT / "results/Direction_consistent_drugs/only_consistent_drugs.csv"
 LINKS = ROOT / "results/Direction_consistent_drugs/direction_consistent_links.csv"
 OUT = ROOT / "results/Metapath_runs"

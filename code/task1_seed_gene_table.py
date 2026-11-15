@@ -1,6 +1,6 @@
 """Task 1: seed gene table.
 
-The 280 seed genes (Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv) with their stage and
+The 280 seed genes (seed_genes/seed_genes_main_Ryaboshapkina2017.csv) with their stage and
 direction from the seed file, and their connections in this run's graph (paper2public, read-only):
   n_gene_partners     distinct INTERACTS_WITH partners
   n_pathways          IN_PATHWAY pathways (all), and by source (Reactome / KEGG_legacy / Hallmark)
@@ -21,7 +21,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import NAFLD, ROOT, driver, now, read_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 OUT = ROOT / "results/Task1"
 STAGE_ORDER = ["0_genetic_risk", "1_steatosis", "2_NASH", "3_fibrosis", "4_HCC"]
 DIR_ORDER = ["increasing", "decreasing", "mixed", "not_applicable"]

@@ -32,7 +32,7 @@ import pandas as pd  # noqa: E402
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import ROOT, driver, now, read_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 EDGES = ROOT / "results/Task2/drug_gene_edges.csv"
 TOP_PW = ROOT / "results/graph_build/step0_7_pathway_nafld/seed_gene_top_pathway.csv"
 ADDED_IND = ROOT / "results/graph_build/step0_8_added_drug_indications/added_drug_indications_chembl.csv"

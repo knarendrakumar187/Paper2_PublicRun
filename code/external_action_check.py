@@ -30,7 +30,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import ROOT, counts, driver, now, read_session, write_log, write_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 OUT = ROOT / "results/graph_build/step0_5_external_directions"
 RAW = ROOT / "data/raw/external_directions"
 GTOP = ROOT / "data/raw/new_links"

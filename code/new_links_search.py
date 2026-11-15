@@ -1,6 +1,6 @@
 """Step 0.4: find drug-gene links on the seed genes that the OptimusKG layer does not have.
 
-Search for the 280 seed genes (Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv), every source
+Search for the 280 seed genes (seed_genes/seed_genes_main_Ryaboshapkina2017.csv), every source
 queried for this run:
 
   1. IUPHAR/BPS Guide to Pharmacology (current interactions.csv + ligand_id_mapping.csv; Ensembl IDs)
@@ -35,7 +35,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import ROOT, driver, now, read_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 OUT = ROOT / "results/graph_build/step0_4_new_links"
 RAW = ROOT / "data/raw/new_links"
 OUT.mkdir(parents=True, exist_ok=True)

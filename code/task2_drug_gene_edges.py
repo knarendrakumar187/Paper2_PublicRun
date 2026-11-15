@@ -24,7 +24,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import ROOT, driver, now, read_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 OUT = ROOT / "results/Task2"
 ADDED_LAYER = "added curated drug-target links"
 NEW_LINKS_LOG = ROOT / "results/graph_build/step0_4_new_links/graph_write/write_log.json"

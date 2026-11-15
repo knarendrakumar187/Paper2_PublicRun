@@ -1,6 +1,6 @@
 {
   "1_excluded_names_in_code": {
-    "run": "2026-11-15T11:11:37+00:00",
+    "run": "2026-11-15T14:07:26+00:00",
     "files_searched": 23,
     "patterns": [
       "liver_graph",
@@ -40,7 +40,7 @@
     "pass": true
   },
   "2_graph_layers": {
-    "run": "2026-11-15T11:11:38+00:00",
+    "run": "2026-11-15T14:07:26+00:00",
     "database": "paper2public",
     "labels": {
       "BiologicalProcess": 25754,
@@ -69,7 +69,7 @@
     "pass": true
   },
   "3_gene_star_in_seed_file": {
-    "run": "2026-11-15T11:12:59+00:00",
+    "run": "2026-11-15T14:08:53+00:00",
     "runs": {
       "RunA_all_seed_genes": {
         "gene_star_in_routes": 55,
@@ -91,7 +91,7 @@
     "pass": true
   },
   "4_numbers": {
-    "run": "2026-11-15T11:13:00+00:00",
+    "run": "2026-11-15T14:08:53+00:00",
     "funnel_steps_add_up": true,
     "funnel_monotonic": true,
     "direction_groups_match_main_list": true,
@@ -100,7 +100,7 @@
     "pass": true
   },
   "5_rerun_identical": {
-    "run": "2026-11-15T11:13:13+00:00",
+    "run": "2026-11-15T14:04:22+00:00",
     "files_compared": 18,
     "identical": true,
     "differing_files": [],

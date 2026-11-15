@@ -34,7 +34,7 @@ from scipy.stats.contingency import odds_ratio  # noqa: E402
 sys.path.insert(0, str(Path(__file__).parent))
 from neo4j_util import ROOT, driver, now, read_session  # noqa: E402
 
-SEEDS = ROOT / "Paper2_seed_options/seed_genes_main_Ryaboshapkina2017.csv"
+SEEDS = ROOT / "seed_genes/seed_genes_main_Ryaboshapkina2017.csv"
 EDGES = ROOT / "results/Task2/drug_gene_edges.csv"
 OUT = ROOT / "results/Task3"
 N_PERM, SEED, N_DEGREE_BINS = 1000, 42, 10
