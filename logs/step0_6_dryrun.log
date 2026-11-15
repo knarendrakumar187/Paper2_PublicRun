@@ -1,0 +1,6 @@
+             pathways  gmt_memberships  memberships_matched
+source                                                     
+Hallmark           50             7322                 7306
+KEGG_legacy       186            12795                12761
+GMT symbols not found among Gene nodes: 8; ambiguous (skipped): 13
+dry run: nothing written

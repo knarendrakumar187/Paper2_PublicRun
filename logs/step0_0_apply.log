@@ -1,0 +1,60 @@
+reading nodes ...
+  Gene                 61,306
+  Drug                 18,640
+  Disease              36,753
+  Pathway               2,805
+  BiologicalProcess    25,754
+  Phenotype            19,341
+reading edges ...
+  ACTS_ON                  36,611 of     36,611 rows (0 with a missing endpoint)
+  INTERACTS_WITH          327,924 of    327,924 rows (0 with a missing endpoint)
+  IN_PATHWAY               46,977 of     46,977 rows (0 with a missing endpoint)
+  TREATS                   58,174 of     58,174 rows (0 with a missing endpoint)
+  OFF_LABEL_FOR               827 of        827 rows (0 with a missing endpoint)
+  CONTRAINDICATED_IN       11,379 of     11,379 rows (0 with a missing endpoint)
+  ASSOCIATED_WITH       9,734,774 of  9,734,774 rows (0 with a missing endpoint)
+  PARENT_OF                47,750 of     47,892 rows (142 with a missing endpoint)
+  HAS_PHENOTYPE           157,144 of    157,144 rows (0 with a missing endpoint)
+  PARTICIPATES_IN         158,410 of    158,410 rows (0 with a missing endpoint)
+  wrote Gene: 61,306
+  wrote Drug: 18,640
+  wrote Disease: 36,753
+  wrote Pathway: 2,805
+  wrote BiologicalProcess: 25,754
+  wrote Phenotype: 19,341
+  wrote ACTS_ON: 36,611
+  wrote INTERACTS_WITH: 327,924
+  wrote IN_PATHWAY: 46,977
+  wrote TREATS: 58,174
+  wrote OFF_LABEL_FOR: 827
+  wrote CONTRAINDICATED_IN: 11,379
+  wrote ASSOCIATED_WITH: 9,734,774
+  wrote PARENT_OF: 47,750
+  wrote HAS_PHENOTYPE: 157,144
+  wrote PARTICIPATES_IN: 158,410
+{
+ "nodes_total": 164599,
+ "relationships_total": 10579970,
+ "nodes": {
+  "BiologicalProcess": 25754,
+  "Disease": 36753,
+  "Drug": 18640,
+  "Gene": 61306,
+  "Pathway": 2805,
+  "Phenotype": 19341
+ },
+ "relationships": {
+  "ACTS_ON": 36611,
+  "ASSOCIATED_WITH": 9734774,
+  "CONTRAINDICATED_IN": 11379,
+  "HAS_PHENOTYPE": 157144,
+  "INTERACTS_WITH": 327924,
+  "IN_PATHWAY": 46977,
+  "OFF_LABEL_FOR": 827,
+  "PARENT_OF": 47750,
+  "PARTICIPATES_IN": 158410,
+  "TREATS": 58174
+ }
+}
+count check passed: graph counts equal the plan
+exit 0

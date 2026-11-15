@@ -1,0 +1,12 @@
+{
+  "run": "RunD_seed_plus_GWAS",
+  "drugs_with_B_routes": 73,
+  "drugs_with_BB_routes": 73,
+  "drugs_treating_a_liver_disease": 14,
+  "removed_liver_contraindicated": 4,
+  "final_ranked_drugs": 10,
+  "stage_table_drugs_rank_le_25": 10,
+  "secondary_removed_liver_contraindicated": 9,
+  "secondary_ranked_drugs": 64,
+  "secondary_rank_le_25": 48
+}

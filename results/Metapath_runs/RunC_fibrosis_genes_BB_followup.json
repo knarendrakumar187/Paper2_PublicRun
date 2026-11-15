@@ -1,0 +1,12 @@
+{
+  "run": "RunC_fibrosis_genes",
+  "drugs_with_B_routes": 27,
+  "drugs_with_BB_routes": 27,
+  "drugs_treating_a_liver_disease": 0,
+  "removed_liver_contraindicated": 0,
+  "final_ranked_drugs": 0,
+  "stage_table_drugs_rank_le_25": 0,
+  "secondary_removed_liver_contraindicated": 2,
+  "secondary_ranked_drugs": 25,
+  "secondary_rank_le_25": 25
+}
